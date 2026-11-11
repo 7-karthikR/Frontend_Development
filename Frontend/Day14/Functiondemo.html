@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Functions</title>
+</head>
+
+<body>
+
+</body>
+
+<script>
+
+    function studentNames() {
+        console.log("Cris")
+        console.log("Ben")
+        console.log("Tom")
+    }
+
+    studentNames()
+
+
+    function welcome() {
+        console.log("Welcome to JavaScript")
+        console.log("Start Learning Functions")
+    }
+
+    welcome()
+
+
+    function numbers() {
+        console.log(10)
+        console.log(20)
+        console.log(30)
+        console.log(40)
+        console.log(50)
+    }
+
+    numbers()
+
+
+    function addition() {
+        var a = 10
+        var b = 20
+
+        console.log(a + b)
+    }
+
+    addition()
+
+
+    function square() {
+        var a = 5
+
+        console.log(a * a)
+    }
+
+    square()
+
+
+    function evenOdd() {
+        var a = 10
+
+        if (a % 2 == 0) {
+            console.log("Even")
+        }
+        else {
+            console.log("Odd")
+        }
+    }
+
+    evenOdd()
+
+
+    function table() {
+        var a = 5
+
+        for (var i = 1; i <= 10; i++) {
+            console.log(a + " x " + i + " = " + (a * i))
+        }
+    }
+
+    table()
+
+
+    function largest() {
+        var a = 25
+        var b = 40
+
+        if (a > b) {
+            console.log(a)
+        }
+        else {
+            console.log(b)
+        }
+    }
+
+    largest()
+
+
+    function reverseName() {
+        var name = "Cris"
+        var reverse = ""
+
+        for (var i = name.length - 1; i >= 0; i--) {
+            reverse = reverse + name[i]
+        }
+
+        console.log(reverse)
+    }
+
+    reverseName()
+
+
+    function factorial() {
+        var num = 5
+        var fact = 1
+
+        for (var i = 1; i <= num; i++) {
+            fact = fact * i
+        }
+
+        console.log(fact)
+    }
+
+    factorial()
+
+</script>
+
+</html>

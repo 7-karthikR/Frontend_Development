@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <input type="text" id="inp">
+    <button onclick="handleSubmit()">Submit</button>
+    <ol id="data">
+
+    </ol>
+
+</body>
+<script>
+
+    function handleSubmit()
+    {
+        var inpData=document.getElementById("inp").value;
+        var list=document.createElement("li");
+        list.innerHTML=inpData;
+        document.getElementById("data").appendChild(list);
+        document.getElementById("inp").value="";
+    }
+
+</script>
+</html>

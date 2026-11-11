@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather App</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eaf2f8;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            width: 350px;
+            margin: 100px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+        }
+
+        input {
+            padding: 10px;
+            width: 65%;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px;
+            background: #2874a6;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #1b4f72;
+        }
+
+        #result {
+            margin-top: 25px;
+        }
+
+        .details {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h2>Weather Report</h2>
+
+        <p>Check the weather in your city</p>
+
+        <input type="text" id="city" placeholder="Enter city name">
+
+        <button onclick="getWeather()">Search</button>
+
+        <div id="result"></div>
+
+    </div>
+
+    <script>
+
+        async function getWeather() {
+
+            let city = document.getElementById("city").value.trim();
+
+            let result = document.getElementById("result");
+
+            if (city === "") {
+                result.innerHTML = "<p class='error'>Please enter a city name</p>";
+                return;
+            }
+
+            result.innerHTML = "<p>Loading...</p>";
+
+            try {
+
+                let locationResponse = await fetch(
+                    `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(city)}&count=1&language=en&format=json`
+                );
+
+                let locationData = await locationResponse.json();
+
+                if (!locationData.results || locationData.results.length === 0) {
+                    result.innerHTML = "<p class='error'>City not found!</p>";
+                    return;
+                }
+
+                let location = locationData.results[0];
+
+                let latitude = location.latitude;
+                let longitude = location.longitude;
+
+                let weatherResponse = await fetch(
+                    `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
+                );
+
+                let weatherData = await weatherResponse.json();
+
+                let weather = weatherData.current;
+
+                result.innerHTML = `
+                    <h3>${location.name}, ${location.country}</h3>
+
+                    <h1>${weather.temperature_2m}°C</h1>
+
+                    <p>Weather: ${getCondition(weather.weather_code)}</p>
+
+                    <div class="details">
+                        <div>
+                            <h4>${weather.relative_humidity_2m}%</h4>
+                            <p>Humidity</p>
+                        </div>
+
+                        <div>
+                            <h4>${weather.wind_speed_10m} km/h</h4>
+                            <p>Wind Speed</p>
+                        </div>
+                    </div>
+                `;
+
+            } catch (error) {
+
+                result.innerHTML =
+                    "<p class='error'>Unable to fetch weather data.</p>";
+
+            }
+        }
+
+        function getCondition(code) {
+
+            if (code === 0) return "Clear Sky";
+            if ([1, 2, 3].includes(code)) return "Partly Cloudy";
+            if ([45, 48].includes(code)) return "Foggy";
+            if ([51, 53, 55, 61, 63, 65].includes(code)) return "Rainy";
+            if ([71, 73, 75].includes(code)) return "Snowfall";
+            if ([95, 96, 99].includes(code)) return "Thunderstorm";
+
+            return "Cloudy";
+        }
+
+    </script>
+
+</body>
+</html>

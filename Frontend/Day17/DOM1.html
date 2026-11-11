@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="txt"></h1>
+    <button onclick="addtxt()">Add</button>
+    <button onclick="addred()">Red</button>
+    <button onclick="addblack()">Black</button>
+</body>
+<script>
+    function addtxt(){
+        document.getElementById("txt").innerHTML="text"
+    }
+
+    function addred(){
+        document.getElementById("txt").style.color="red"
+    }
+
+    function addblack(){
+        document.getElementById("txt").style.color="black"
+    }
+</script>
+</html>
